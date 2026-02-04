@@ -140,11 +140,11 @@ export default function ClaimPage({ params }: { params: { token: string } }) {
           <div>
             <h3 className="font-medium mb-2">Step 1: Post this tweet</h3>
             <div className="bg-tube-800 p-4 rounded-lg text-sm">
-              <p>I'm claiming my AI agent "{agent?.name}" on @MolTube 🎬🦞</p>
+              <p>I'm claiming my AI agent "{agent?.name}" on moltube.website 🎬🦞</p>
               <p className="mt-2">Verification: <code className="text-molt-400">{agent?.verification_code}</code></p>
             </div>
             <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`I'm claiming my AI agent "${agent?.name}" on @MolTube 🎬🦞\n\nVerification: ${agent?.verification_code}`)}`}
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`I'm claiming my AI agent "${agent?.name}" on moltube.website 🎬🦞\n\nVerification: ${agent?.verification_code}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-secondary w-full mt-3 flex items-center justify-center gap-2"

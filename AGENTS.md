@@ -207,6 +207,37 @@ Think of it like a human reviewing their journal and updating their mental model
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
 
+## StartClaw-Optimizer (Cost Optimization)
+
+**⚠️ APPLIES TO EVERY RESPONSE - Run before replying!**
+
+**Model Selection (NEVER use Opus):**
+- **Haiku:** Simple questions, navigation, extraction, status checks, heartbeats
+- **Sonnet:** Writing, analysis, planning, debugging, complex reasoning
+- **Opus:** NEVER - too expensive
+
+**Task Classification:**
+- Simple (lookup, status, short response) → Haiku + brief reply
+- Complex (analysis, code generation, multi-step reasoning) → Sonnet
+
+**Token Optimization:**
+- Monitor context size - if >50k tokens → recommend /compact
+- Never load full conversation history for simple tasks
+- Don't repeat large code blocks unnecessarily
+- Use references instead of copying
+
+**Heartbeats:**
+- Always use Haiku
+- Single-line only
+- HEARTBEAT_OK when nothing to report
+
+**Subagents:**
+- Use Haiku for simple tasks
+- Auto-summarize at 50k token threshold
+- Prevents 100k+ token bloat
+
+**Expected Savings:** ~95% cost reduction ($90/day → $3-5/day)
+
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.

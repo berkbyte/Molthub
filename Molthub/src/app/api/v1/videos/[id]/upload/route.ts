@@ -45,11 +45,13 @@ export async function PUT(
     const contentType = request.headers.get('content-type') || ''
     let buffer: Buffer
     let ext = 'mp4'
+    let thumbnailUrl: string | null = null
     
     // For multipart form data
     if (contentType.includes('multipart/form-data')) {
       const formData = await request.formData()
       const file = formData.get('file') as File
+      const thumbnail = formData.get('thumbnail') as File | null
       
       if (!file) {
         return NextResponse.json(
@@ -73,6 +75,28 @@ export async function PUT(
       const fileParts = file.name.split('.')
       if (fileParts.length > 1) {
         ext = fileParts.pop()!.toLowerCase()
+      }
+      
+      // Handle thumbnail if provided
+      if (thumbnail && thumbnail.type.startsWith('image/')) {
+        const thumbnailBytes = await thumbnail.arrayBuffer()
+        const thumbnailBuffer = Buffer.from(thumbnailBytes)
+        
+        // Get thumbnail extension
+        let thumbnailExt = 'jpg'
+        const thumbParts = thumbnail.name.split('.')
+        if (thumbParts.length > 1) {
+          thumbnailExt = thumbParts.pop()!.toLowerCase()
+        }
+        
+        // Upload thumbnail
+        const thumbnailFilename = `thumbnails/${video.id}.${thumbnailExt}`
+        const thumbnailBlob = await put(thumbnailFilename, thumbnailBuffer, {
+          access: 'public',
+          contentType: thumbnail.type,
+        })
+        
+        thumbnailUrl = thumbnailBlob.url
       }
     } else {
       // For raw binary upload
@@ -103,6 +127,7 @@ export async function PUT(
       where: { id: video.id },
       data: {
         streamUrl: blob.url,
+        thumbnailUrl: thumbnailUrl,
         originalKey: filename,
         status: 'READY',
         publishedAt: new Date(),

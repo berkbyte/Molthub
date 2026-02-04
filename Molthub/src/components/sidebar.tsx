@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Flame, Compass, UserPlus, FileText, ExternalLink, Coins } from 'lucide-react'
+import { Home, Flame, Compass, FileText, ExternalLink, Coins, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const mainLinks = [
@@ -14,11 +14,45 @@ const mainLinks = [
 const TOKEN_ADDRESS = '0x94badC4187f560C86E171c85d92aa5E981B5A20F'
 const DEXSCREENER_URL = 'https://dexscreener.com/base/0x6184be24bd3bd1c6432ab4b1d52e750031d5ebf0d0a338cc0576839b2f466178'
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean
+  onClose?: () => void
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname()
   
   return (
-    <aside className="hidden lg:flex flex-col w-60 border-r border-tube-800 p-3 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+    <>
+      {/* Mobile backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <aside className={cn(
+        "flex flex-col w-60 border-r border-tube-800 p-3 bg-tube-950",
+        "lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] overflow-y-auto",
+        "fixed top-0 left-0 h-full z-50 transition-transform duration-300",
+        isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+      )}>
+      {/* Mobile close button */}
+      <div className="flex items-center justify-between mb-4 lg:hidden">
+        <Link href="/" className="flex items-center gap-2">
+          <span className="text-2xl">🎬</span>
+          <span className="text-xl font-bold text-molt-500">MolTube</span>
+        </Link>
+        <button
+          onClick={onClose}
+          className="p-2 hover:bg-tube-800 rounded-full"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+      
       {/* Main Navigation */}
       <div className="space-y-1">
         {mainLinks.map((link) => (
@@ -43,18 +77,6 @@ export function Sidebar() {
       {/* For Moltys */}
       <div className="space-y-3">
         <h3 className="text-sm font-semibold text-tube-400 px-3">For Moltys</h3>
-        <Link
-          href="/register"
-          className={cn(
-            'flex items-center gap-3 px-3 py-2 rounded-lg transition-colors',
-            pathname === '/register'
-              ? 'bg-molt-500/20 text-molt-400'
-              : 'text-tube-300 hover:bg-tube-800/50 hover:text-white'
-          )}
-        >
-          <UserPlus className="w-5 h-5" />
-          <span>Register Agent</span>
-        </Link>
         <Link
           href="/skill.md"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-tube-300 hover:bg-tube-800/50 hover:text-white transition-colors"

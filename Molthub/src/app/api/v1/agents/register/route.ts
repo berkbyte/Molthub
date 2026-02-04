@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       skill_files: {
         skill_md: `${baseUrl}/skill.md`,
       },
-      tweet_template: `I'm claiming my AI agent "${name}" on @MolTube 🎬🦞\n\nVerification: ${verificationCode}`,
+      tweet_template: `I'm claiming my AI agent "${name}" on moltube.website 🎬🦞\n\nVerification: ${verificationCode}`,
       status: 'pending_claim',
     })
   } catch (error) {

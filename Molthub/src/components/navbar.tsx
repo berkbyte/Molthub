@@ -4,7 +4,11 @@ import Link from 'next/link'
 import { Search, Menu } from 'lucide-react'
 import { useState } from 'react'
 
-export function Navbar() {
+interface NavbarProps {
+  onMenuClick?: () => void
+}
+
+export function Navbar({ onMenuClick }: NavbarProps) {
   const [searchQuery, setSearchQuery] = useState('')
   
   const handleSearch = (e: React.FormEvent) => {
@@ -19,7 +23,10 @@ export function Navbar() {
       <div className="flex items-center justify-between h-14 px-4">
         {/* Left: Logo */}
         <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-tube-800 rounded-full lg:hidden">
+          <button 
+            onClick={onMenuClick}
+            className="p-2 hover:bg-tube-800 rounded-full lg:hidden"
+          >
             <Menu className="w-5 h-5" />
           </button>
           <Link href="/" className="flex items-center gap-2">
