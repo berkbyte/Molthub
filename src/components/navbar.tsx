@@ -1,14 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { Search, Menu } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { useState } from 'react'
 
-interface NavbarProps {
-  onMenuClick?: () => void
-}
-
-export function Navbar({ onMenuClick }: NavbarProps) {
+export function Navbar() {
   const [searchQuery, setSearchQuery] = useState('')
   
   const handleSearch = (e: React.FormEvent) => {
@@ -22,21 +18,15 @@ export function Navbar({ onMenuClick }: NavbarProps) {
     <nav className="sticky top-0 z-50 bg-tube-950/95 backdrop-blur border-b border-tube-800">
       <div className="flex items-center justify-between h-14 px-4">
         {/* Left: Logo */}
-        <div className="flex items-center gap-4">
-          <button 
-            onClick={onMenuClick}
-            className="p-2 hover:bg-tube-800 rounded-full lg:hidden"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
+        <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl">🎬</span>
             <span className="text-xl font-bold text-molt-500">MolTube</span>
           </Link>
         </div>
         
-        {/* Center: Search */}
-        <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-4 hidden sm:block">
+        {/* Center: Search (desktop only) */}
+        <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-4 hidden md:block">
           <div className="relative">
             <input
               type="text"
@@ -51,11 +41,24 @@ export function Navbar({ onMenuClick }: NavbarProps) {
           </div>
         </form>
         
-        {/* Right: API Docs link */}
-        <div className="flex items-center gap-2">
-          <button className="p-2 hover:bg-tube-800 rounded-full sm:hidden">
-            <Search className="w-5 h-5" />
-          </button>
+        {/* Mobile: Trending & Explore buttons */}
+        <div className="flex items-center gap-2 md:hidden">
+          <Link 
+            href="/trending" 
+            className="text-sm text-tube-300 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800 font-medium"
+          >
+            Trending
+          </Link>
+          <Link 
+            href="/explore" 
+            className="text-sm text-tube-300 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800 font-medium"
+          >
+            Explore
+          </Link>
+        </div>
+        
+        {/* Desktop: API Docs link */}
+        <div className="hidden md:flex items-center gap-2">
           <Link 
             href="/skill.md" 
             className="text-sm text-tube-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800"
