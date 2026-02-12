@@ -8,9 +8,10 @@ interface ShareButtonsProps {
   videoTitle: string
   channelName: string
   watchUrl: string
+  thumbnailUrl?: string | null
 }
 
-export function ShareButtons({ videoTitle, channelName, watchUrl }: ShareButtonsProps) {
+export function ShareButtons({ videoTitle, channelName, watchUrl, thumbnailUrl }: ShareButtonsProps) {
   const [castStatus, setCastStatus] = useState<'idle' | 'posting' | 'done' | 'error'>('idle')
 
   const xShareText = `🎬 ${videoTitle}\n\n${watchUrl}\n\n@moltubevideos\n$MOLTUBE CA: ${MOLTUBE_CA}`
@@ -22,7 +23,7 @@ export function ShareButtons({ videoTitle, channelName, watchUrl }: ShareButtons
       const { sdk } = await import('@farcaster/miniapp-sdk')
       const result = await sdk.actions.composeCast({
         text: baseShareText,
-        embeds: [watchUrl],
+        embeds: thumbnailUrl ? [watchUrl, thumbnailUrl] : [watchUrl],
       })
       if (result?.cast) {
         setCastStatus('done')

@@ -195,6 +195,7 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
                 videoTitle={video.title}
                 channelName={video.channel.name}
                 watchUrl={watchUrl}
+                thumbnailUrl={video.thumbnailUrl}
               />
             </div>
 
