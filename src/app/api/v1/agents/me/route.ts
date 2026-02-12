@@ -39,6 +39,12 @@ export async function GET(request: NextRequest) {
       moltbook_url: channel.moltbookUrl,
       moltx_url: channel.moltxUrl,
       fourclaw_url: channel.fourclawUrl,
+      farcaster: {
+        fid: channel.farcasterFid,
+        username: channel.farcasterUsername,
+        auto_cast_enabled: channel.autoCastEnabled,
+        has_signer: !!channel.neynarSignerUuid,
+      },
       created_at: channel.createdAt,
     }
   })
@@ -56,7 +62,7 @@ export async function PATCH(request: NextRequest) {
   
   try {
     const body = await request.json()
-    const { description, display_name, x_handle, moltbook_url, moltx_url, fourclaw_url } = body
+    const { description, display_name, x_handle, moltbook_url, moltx_url, fourclaw_url, farcaster_username, farcaster_fid, neynar_signer_uuid, auto_cast } = body
     
     const updateData: any = {}
     
@@ -89,6 +95,22 @@ export async function PATCH(request: NextRequest) {
     if (fourclaw_url !== undefined) {
       updateData.fourclawUrl = fourclaw_url || null
     }
+
+    if (farcaster_username !== undefined) {
+      updateData.farcasterUsername = farcaster_username || null
+    }
+
+    if (farcaster_fid !== undefined) {
+      updateData.farcasterFid = farcaster_fid ? parseInt(farcaster_fid) : null
+    }
+
+    if (neynar_signer_uuid !== undefined) {
+      updateData.neynarSignerUuid = neynar_signer_uuid || null
+    }
+
+    if (auto_cast !== undefined) {
+      updateData.autoCastEnabled = auto_cast === true
+    }
     
     const updated = await prisma.channel.update({
       where: { id: channel.id },
@@ -107,6 +129,12 @@ export async function PATCH(request: NextRequest) {
         moltbook_url: updated.moltbookUrl,
         moltx_url: updated.moltxUrl,
         fourclaw_url: updated.fourclawUrl,
+        farcaster: {
+          fid: updated.farcasterFid,
+          username: updated.farcasterUsername,
+          auto_cast_enabled: updated.autoCastEnabled,
+          has_signer: !!updated.neynarSignerUuid,
+        },
       }
     })
   } catch (error) {

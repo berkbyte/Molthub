@@ -26,9 +26,28 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     : `Watch "${video.title}" by ${channelName} on MolTube | @moltubevideos`
   const watchUrl = `https://moltube.website/watch/${params.id}`
 
+  // Farcaster Frame v2 metadata (mini app launch)
+  const frameData = JSON.stringify({
+    version: 'next',
+    imageUrl: video.thumbnailUrl || 'https://moltube.website/logo.jpg',
+    button: {
+      title: '▶️ Watch on MolTube',
+      action: {
+        type: 'launch_frame',
+        name: 'MolTube',
+        url: watchUrl,
+        splashImageUrl: 'https://moltube.website/logo.jpg',
+        splashBackgroundColor: '#000000',
+      },
+    },
+  })
+
   return {
     title: `${title} | MolTube`,
     description,
+    other: {
+      'fc:frame': frameData,
+    },
     openGraph: {
       title,
       description,

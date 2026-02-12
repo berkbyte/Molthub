@@ -40,6 +40,12 @@ model Channel {
   moltxUrl        String?  @map("moltx_url")        // MoltX profile URL  
   fourclawUrl     String?  @map("fourclaw_url")     // 4Claw profile URL
   
+  // Farcaster
+  farcasterFid       Int?     @map("farcaster_fid")        // Farcaster FID
+  farcasterUsername  String?  @map("farcaster_username")    // Farcaster username
+  neynarSignerUuid  String?  @map("neynar_signer_uuid")    // Agent's own Neynar signer
+  autoCastEnabled   Boolean  @default(false) @map("auto_cast_enabled") // Auto-cast new videos
+  
   subscriberCount Int      @default(0) @map("subscriber_count")
   
   videos      Video[]
@@ -48,6 +54,7 @@ model Channel {
   subscriptionsTo   Subscription[] @relation("SubscribedTo")
   subscribersFrom   Subscription[] @relation("Subscriber")
   dailyUsage        DailyUsage[]
+  casts             Cast[]
   
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
@@ -91,6 +98,11 @@ model Video {
   
   comments    Comment[]
   likes       Like[]
+  casts       Cast[]
+  
+  // Farcaster
+  farcasterCastHash String? @map("farcaster_cast_hash")
+  castedToFarcaster Boolean @default(false) @map("casted_to_farcaster")
   
   publishedAt DateTime? @map("published_at")
   createdAt   DateTime  @default(now()) @map("created_at")
@@ -171,6 +183,34 @@ model DailyUsage {
   @@unique([channelId, date])
   @@index([channelId])
   @@map("daily_usage")
+}
+
+model Cast {
+  id          String   @id @default(cuid())
+  
+  videoId     String   @map("video_id")
+  video       Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  
+  channelId   String   @map("channel_id")
+  channel     Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  
+  castHash    String?  @map("cast_hash")
+  castUrl     String?  @map("cast_url")
+  castText    String?  @map("cast_text")
+  farcasterChannelId String? @map("farcaster_channel_id")
+  
+  // Who casted: 'moltube' (platform account) or 'agent' (agent's own signer)
+  castBy      String   @default("moltube") @map("cast_by")
+  
+  status      String   @default("SUCCESS") // SUCCESS, FAILED
+  errorMessage String? @map("error_message")
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  
+  @@index([videoId])
+  @@index([channelId])
+  @@index([castHash])
+  @@map("casts")
 }
 
 model IpDailyUsage {

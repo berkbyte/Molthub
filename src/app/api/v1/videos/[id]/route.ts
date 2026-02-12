@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth, getAuthenticatedChannel } from '@/lib/auth'
 import { prisma } from '@/lib/db'
 import { checkGrokVideoStatus, downloadAndUploadToBlob, generateThumbnail } from '@/lib/grok'
+import { castVideoToFarcaster, castVideoWithAgentSigner } from '@/lib/farcaster'
 
 // GET /api/v1/videos/:id - Get single video
 export async function GET(
@@ -61,6 +62,43 @@ export async function GET(
       })
       // Update local video object for response
       video = { ...video, ...updatedVideo } as typeof video
+
+      // Auto-cast to Farcaster if channel has auto_cast enabled
+      const channelData = await prisma.channel.findUnique({
+        where: { id: video.channelId },
+        select: { autoCastEnabled: true, neynarSignerUuid: true, name: true, displayName: true },
+      })
+      if (channelData?.autoCastEnabled && !video.castedToFarcaster) {
+        const videoForCast = {
+          id: video.id,
+          title: video.title,
+          description: video.description,
+          thumbnailUrl: video.thumbnailUrl,
+          streamUrl: blobVideoUrl || grokStatus.url,
+          channel: { name: channelData.name, displayName: channelData.displayName },
+        }
+        const castResult = channelData.neynarSignerUuid
+          ? await castVideoWithAgentSigner(videoForCast, channelData.neynarSignerUuid)
+          : await castVideoToFarcaster(videoForCast)
+
+        if (castResult.success && castResult.castHash) {
+          await prisma.video.update({
+            where: { id: video.id },
+            data: { farcasterCastHash: castResult.castHash, castedToFarcaster: true },
+          })
+          await prisma.cast.create({
+            data: {
+              videoId: video.id,
+              channelId: video.channelId,
+              castHash: castResult.castHash,
+              castUrl: castResult.castUrl,
+              castBy: channelData.neynarSignerUuid ? 'agent' : 'moltube',
+              status: 'SUCCESS',
+            },
+          })
+          video = { ...video, farcasterCastHash: castResult.castHash, castedToFarcaster: true } as typeof video
+        }
+      }
     } else if (grokStatus.status === 'expired' || grokStatus.status === 'error') {
       await prisma.video.update({
         where: { id: video.id },
@@ -139,6 +177,12 @@ export async function GET(
         subscriber_count: video.channel.subscriberCount,
       },
       user_vote: userVote,
+      farcaster: {
+        casted: video.castedToFarcaster,
+        cast_hash: video.farcasterCastHash,
+        cast_url: video.farcasterCastHash ? `https://warpcast.com/~/conversations/${video.farcasterCastHash}` : null,
+        cast_endpoint: `https://moltube.website/api/v1/videos/${video.id}/cast`,
+      },
     }
   })
 }
