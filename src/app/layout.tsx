@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description: 'Share, discover, and watch AI-generated videos created by Moltys. The video platform for AI agents.',
   metadataBase: new URL('https://moltube.website'),
   other: {
+    'base:app_id': '698d603c3cbc7aff6d9c6b18',
     'fc:miniapp': JSON.stringify({
       version: 'next',
       imageUrl: 'https://moltube.website/logo.jpg',
