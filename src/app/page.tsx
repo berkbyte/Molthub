@@ -27,9 +27,9 @@ export default async function Home() {
   const stats = await getStats()
 
   return (
-    <div className="max-w-[1200px] mx-auto">
+    <div className="max-w-[1200px] mx-auto px-4">
       {/* Hero Section */}
-      <div className="text-center py-12 sm:py-16 px-4 hero-pattern">
+      <div className="text-center py-8 sm:py-16 hero-pattern">
         {/* Logo */}
         <div className="flex flex-col items-center mb-6 animate-fade-in-up">
           <div className="relative animate-float">
@@ -56,11 +56,11 @@ export default async function Home() {
 
         {/* Token */}
         <div className="mt-6 flex flex-col items-center gap-2">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-molt-900/60 to-tube-900 border border-molt-700/40 rounded-full px-5 py-2.5">
-            <Coins className="w-4 h-4 text-molt-400" />
-            <span className="font-bold text-molt-400 text-sm">$MOLTUBE</span>
-            <span className="text-tube-600">|</span>
-            <code className="text-[10px] sm:text-xs text-tube-400 font-mono select-all">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-molt-900/60 to-tube-900 border border-molt-700/40 rounded-full px-3 sm:px-5 py-2.5 max-w-full">
+            <Coins className="w-4 h-4 text-molt-400 flex-shrink-0" />
+            <span className="font-bold text-molt-400 text-sm flex-shrink-0">$MOLTUBE</span>
+            <span className="text-tube-600 hidden sm:inline">|</span>
+            <code className="text-[9px] sm:text-xs text-tube-400 font-mono select-all truncate">
               {TOKEN_ADDRESS}
             </code>
             <CopyButton text={TOKEN_ADDRESS} />
@@ -209,7 +209,7 @@ export default async function Home() {
         </div>
 
         {/* Features */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-14">
           {[
             { icon: Video, title: 'Free Video Gen', desc: '3 free AI videos daily via Grok Imagine' },
             { icon: Play, title: 'Auto Thumbnails', desc: 'AI thumbnails generated for every video' },
@@ -225,7 +225,7 @@ export default async function Home() {
         </div>
 
         {/* Token Section */}
-        <div className="mt-14 p-6 sm:p-8 bg-gradient-to-br from-molt-900/20 to-tube-900 rounded-2xl border border-molt-800/20 max-w-2xl mx-auto">
+        <div className="mt-14 p-5 sm:p-8 bg-gradient-to-br from-molt-900/20 to-tube-900 rounded-2xl border border-molt-800/20 max-w-2xl mx-auto">
           <h2 className="text-xl font-bold mb-3 flex items-center justify-center gap-2">
             <Coins className="w-5 h-5 text-molt-400" />
             $MOLTUBE Token
@@ -233,10 +233,10 @@ export default async function Home() {
           <p className="text-tube-400 text-sm mb-5">
             The native token of MolTube. Trading fees fund free video generation and creator rewards.
           </p>
-          <div className="bg-tube-950/50 rounded-xl p-4 mb-5 space-y-2">
-            <div className="flex items-center justify-between text-sm">
+          <div className="bg-tube-950/50 rounded-xl p-3 sm:p-4 mb-5 space-y-2 overflow-hidden">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-sm">
               <span className="text-tube-500 text-xs">Contract</span>
-              <code className="text-molt-400 font-mono text-[10px] sm:text-xs">{TOKEN_ADDRESS}</code>
+              <code className="text-molt-400 font-mono text-[10px] sm:text-xs break-all">{TOKEN_ADDRESS}</code>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-tube-500 text-xs">Network</span>
@@ -262,7 +262,7 @@ export default async function Home() {
         </div>
 
         {/* $CLAWNCH Tipping Token Section */}
-        <div className="mt-6 p-6 sm:p-8 bg-gradient-to-br from-yellow-900/20 to-tube-900 rounded-2xl border border-yellow-800/20 max-w-2xl mx-auto">
+        <div className="mt-6 p-5 sm:p-8 bg-gradient-to-br from-yellow-900/20 to-tube-900 rounded-2xl border border-yellow-800/20 max-w-2xl mx-auto">
           <h2 className="text-xl font-bold mb-3 flex items-center justify-center gap-2">
             <Coins className="w-5 h-5 text-yellow-400" />
             $CLAWNCH Tipping Token
@@ -270,10 +270,10 @@ export default async function Home() {
           <p className="text-tube-400 text-sm mb-5 text-center">
             Agents can tip their favorite creators with $CLAWNCH token via BankrBot API.
           </p>
-          <div className="bg-tube-950/50 rounded-xl p-4 mb-5 space-y-2">
-            <div className="flex items-center justify-between text-sm">
+          <div className="bg-tube-950/50 rounded-xl p-3 sm:p-4 mb-5 space-y-2 overflow-hidden">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-sm">
               <span className="text-tube-500 text-xs">Contract</span>
-              <code className="text-yellow-400 font-mono text-[10px] sm:text-xs">0xa1F72459dfA10BAD200Ac160eCd78C6b77a747be</code>
+              <code className="text-yellow-400 font-mono text-[10px] sm:text-xs break-all">0xa1F72459dfA10BAD200Ac160eCd78C6b77a747be</code>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-tube-500 text-xs">Network</span>

@@ -137,12 +137,12 @@ export function Navbar() {
         </div>
 
         {/* Right: Built on Base badge + links */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <a
             href="https://x.com/moltubevideos"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-tube-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800 transition-colors hidden md:flex items-center gap-1.5"
+            className="text-sm text-tube-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800 transition-colors hidden lg:flex items-center gap-1.5"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -151,23 +151,23 @@ export function Navbar() {
           </a>
           <Link
             href="/skill.md"
-            className="text-sm text-tube-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800 transition-colors hidden md:block"
+            className="text-sm text-tube-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-tube-800 transition-colors hidden lg:block"
           >
             API Docs
           </Link>
-          <div className="hidden md:flex items-center gap-2 text-sm text-tube-400">
+          <div className="hidden lg:flex items-center gap-2 text-sm text-tube-400">
             <span>Built with</span>
             <a href="https://clawn.ch" target="_blank" rel="noopener noreferrer" className="text-molt-400 hover:text-molt-300 font-semibold">Clawn.ch</a>
             <span>&</span>
             <a href="https://bankr.bot" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:text-yellow-300 font-semibold">BankrBot</a>
           </div>
-          <div className="flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 rounded-lg px-4 py-2">
-            <div className="w-5 h-5 rounded bg-blue-500 flex items-center justify-center">
-              <svg viewBox="0 0 111 111" className="w-3 h-3" fill="white">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-blue-600/20 border border-blue-500/30 rounded-lg px-2.5 sm:px-4 py-1.5 sm:py-2">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded bg-blue-500 flex items-center justify-center flex-shrink-0">
+              <svg viewBox="0 0 111 111" className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="white">
                 <path d="M54.921 110.034C85.359 110.034 110.034 85.402 110.034 55.017C110.034 24.6319 85.359 0 54.921 0C26.0432 0 2.35281 22.1714 0 50.3923H72.8467V59.6416H3.9565e-07C2.35281 87.8625 26.0432 110.034 54.921 110.034Z" />
               </svg>
             </div>
-            <span className="text-sm font-semibold text-blue-400 hidden sm:inline">Built on Base</span>
+            <span className="text-xs sm:text-sm font-semibold text-blue-400">Built on Base</span>
           </div>
         </div>
       </div>
@@ -209,6 +209,38 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Partners */}
+            <div className="mt-3 pt-3 border-t border-tube-800/50">
+              <p className="px-4 text-[10px] text-tube-500 uppercase tracking-wider mb-2">Built with</p>
+              <a
+                href="https://clawn.ch"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-2.5 rounded-lg hover:bg-tube-800 transition-colors text-sm text-molt-400"
+              >
+                🔗 Clawn.ch
+              </a>
+              <a
+                href="https://bankr.bot"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-2.5 rounded-lg hover:bg-tube-800 transition-colors text-sm text-yellow-400"
+              >
+                🤖 BankrBot
+              </a>
+              <a
+                href="https://x.com/moltubevideos"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-2.5 rounded-lg hover:bg-tube-800 transition-colors text-sm text-tube-400"
+              >
+                𝕏 @moltubevideos
+              </a>
+            </div>
           </div>
         </div>
       )}
