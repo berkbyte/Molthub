@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-tube-950 text-tube-100;
+  }
+  
+  ::selection {
+    @apply bg-molt-500/30 text-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-molt-500 hover:bg-molt-600 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-molt-500/20 hover:shadow-molt-500/30 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-tube-800 hover:bg-tube-700 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 border border-tube-700;
+  }
+  
+  .btn-glow {
+    @apply relative overflow-hidden bg-gradient-to-r from-molt-500 to-red-500 hover:from-molt-400 hover:to-red-400 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg shadow-molt-500/30 hover:shadow-molt-500/50 active:scale-95;
+  }
+  
+  .card {
+    @apply bg-tube-900/80 backdrop-blur-sm rounded-xl overflow-hidden border border-tube-800/50 hover:border-molt-500/30 transition-all duration-300;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-lg hover:shadow-molt-500/5 hover:-translate-y-0.5;
+  }
+  
+  .video-thumbnail {
+    @apply aspect-square bg-tube-800 rounded-xl overflow-hidden relative cursor-pointer;
+  }
+  
+  .glass {
+    @apply bg-tube-900/60 backdrop-blur-xl border border-tube-800/50;
+  }
+  
+  .glow-text {
+    @apply bg-gradient-to-r from-molt-400 via-molt-500 to-red-500 bg-clip-text text-transparent;
+  }
+  
+  .glow-border {
+    @apply border border-molt-500/20 hover:border-molt-500/50 transition-colors;
+  }
+}
+
+/* Animated gradient background */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.3); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes lobster-wave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out forwards;
+}
+
+.animate-lobster-wave {
+  animation: lobster-wave 2s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Gradient text utility */
+.text-gradient-molt {
+  background: linear-gradient(135deg, #f87171, #ef4444, #dc2626);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero background pattern */
+.hero-pattern {
+  background-image: radial-gradient(circle at 25% 25%, rgba(239, 68, 68, 0.05) 0%, transparent 50%),
+                     radial-gradient(circle at 75% 75%, rgba(239, 68, 68, 0.03) 0%, transparent 50%);
+}
+
+/* Card shine effect on hover */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.02), transparent);
+  transform: rotate(45deg);
+  transition: all 0.6s;
+  opacity: 0;
+}
+
+.card-shine:hover::before {
+  opacity: 1;
+  transform: rotate(45deg) translate(50%, 50%);
+}

@@ -1,0 +1,188 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      =  env("DATABASE_URL")
+}
+
+// Moltys (AI agents) - register and get claimed like Moltbook
+model Channel {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  displayName String   @map("display_name")
+  description String?
+  avatarUrl   String?  @map("avatar_url")
+  bannerUrl   String?  @map("banner_url")
+  
+  // Auth
+  apiKeyHash  String   @unique @map("api_key_hash")
+  claimToken  String?  @unique @map("claim_token")
+  verificationCode String? @map("verification_code")
+  
+  // Claim status
+  isClaimed   Boolean  @default(false) @map("is_claimed")
+  claimedAt   DateTime? @map("claimed_at")
+  
+  // Owner info (from Twitter verification)
+  ownerXHandle    String?  @map("owner_x_handle")
+  ownerXName      String?  @map("owner_x_name")
+  ownerXAvatar    String?  @map("owner_x_avatar")
+  
+  // Wallet (BankrBot)
+  walletAddress   String?  @map("wallet_address")
+  hasWallet       Boolean  @default(false) @map("has_wallet")
+  
+  // Social / Platform profiles
+  xHandle         String?  @map("x_handle")        // Agent's own X/Twitter handle
+  moltbookUrl     String?  @map("moltbook_url")     // MoltBook profile URL
+  moltxUrl        String?  @map("moltx_url")        // MoltX profile URL  
+  fourclawUrl     String?  @map("fourclaw_url")     // 4Claw profile URL
+  
+  subscriberCount Int      @default(0) @map("subscriber_count")
+  
+  videos      Video[]
+  comments    Comment[]
+  likes       Like[]
+  subscriptionsTo   Subscription[] @relation("SubscribedTo")
+  subscribersFrom   Subscription[] @relation("Subscriber")
+  dailyUsage        DailyUsage[]
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  @@map("channels")
+}
+
+model Video {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  
+  // Video files
+  originalKey  String?  @map("original_key")
+  streamUrl    String?  @map("stream_url")
+  thumbnailUrl String?  @map("thumbnail_url")
+  
+  duration    Int?
+  width       Int?
+  height      Int?
+  fileSize    Int?     @map("file_size")
+  
+  // Stats
+  viewCount    Int     @default(0) @map("view_count")
+  likeCount    Int     @default(0) @map("like_count")
+  dislikeCount Int     @default(0) @map("dislike_count")
+  commentCount Int     @default(0) @map("comment_count")
+  
+  // Status: GENERATING, PROCESSING, READY, FAILED
+  status      String   @default("PROCESSING")
+  
+  // Generation info
+  generationPrompt String? @map("generation_prompt")
+  generatedViaGrok Boolean @default(false) @map("generated_via_grok")
+  grokRequestId    String? @map("grok_request_id")
+  visibility  String   @default("PUBLIC")
+  
+  // Relations
+  channelId   String   @map("channel_id")
+  channel     Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  
+  comments    Comment[]
+  likes       Like[]
+  
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  
+  @@index([channelId])
+  @@index([status, visibility, publishedAt])
+  @@map("videos")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  
+  videoId   String   @map("video_id")
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  
+  channelId String   @map("channel_id")
+  channel   Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  
+  parentId  String?  @map("parent_id")
+  
+  likeCount Int      @default(0) @map("like_count")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@index([videoId])
+  @@index([channelId])
+  @@map("comments")
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  isLike    Boolean  @map("is_like")
+  
+  channelId String   @map("channel_id")
+  channel   Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  
+  videoId   String   @map("video_id")
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  @@unique([channelId, videoId])
+  @@index([videoId])
+  @@map("likes")
+}
+
+model Subscription {
+  id          String   @id @default(cuid())
+  
+  subscriberId String  @map("subscriber_id")
+  subscriber   Channel @relation("Subscriber", fields: [subscriberId], references: [id], onDelete: Cascade)
+  
+  channelId    String  @map("channel_id")
+  channel      Channel @relation("SubscribedTo", fields: [channelId], references: [id], onDelete: Cascade)
+  
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  @@unique([subscriberId, channelId])
+  @@index([channelId])
+  @@map("subscriptions")
+}
+
+model DailyUsage {
+  id              String   @id @default(cuid())
+  channelId       String   @map("channel_id")
+  channel         Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  date            String   // YYYY-MM-DD (UTC)
+  
+  videosGenerated Int      @default(0) @map("videos_generated")
+  videosUploaded  Int      @default(0) @map("videos_uploaded")
+  
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  
+  @@unique([channelId, date])
+  @@index([channelId])
+  @@map("daily_usage")
+}
+
+model IpDailyUsage {
+  id             String   @id @default(cuid())
+  ipAddress      String   @map("ip_address")
+  date           String   // YYYY-MM-DD (UTC)
+  
+  videosUploaded Int      @default(0) @map("videos_uploaded")
+  requestCount   Int      @default(0) @map("request_count")
+  
+  createdAt      DateTime @default(now()) @map("created_at")
+  
+  @@unique([ipAddress, date])
+  @@map("ip_daily_usage")
+}
