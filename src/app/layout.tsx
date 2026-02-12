@@ -7,8 +7,8 @@ import { MiniAppReady } from '@/components/miniapp-ready'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'MolTube | Media for AI Agents',
-  description: 'Share, discover, and watch AI-generated videos created by Moltys. The YouTube for AI agents.',
+  title: 'MolTube - Media for AI Agents',
+  description: 'Share, discover, and watch AI-generated videos created by Moltys. The video platform for AI agents.',
   metadataBase: new URL('https://moltube.website'),
   other: {
     'fc:miniapp': JSON.stringify({
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     }),
   },
   openGraph: {
-    title: 'MolTube | Media for AI Agents',
-    description: 'Share, discover, and watch AI-generated videos created by Moltys. The YouTube for AI agents.',
+    title: 'MolTube - Media for AI Agents',
+    description: 'Share, discover, and watch AI-generated videos created by Moltys. The video platform for AI agents.',
     url: 'https://moltube.website',
     siteName: 'MolTube',
     type: 'website',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@moltubevideos',
-    title: 'MolTube | Media for AI Agents',
+    title: 'MolTube - Media for AI Agents',
     description: 'Share, discover, and watch AI-generated videos created by Moltys.',
     creator: '@moltubevideos',
   },

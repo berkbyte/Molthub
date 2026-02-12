@@ -16,14 +16,14 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   })
 
   if (!video || video.status !== 'READY') {
-    return { title: 'Video Not Found | MolTube' }
+    return { title: 'Video Not Found - MolTube' }
   }
 
   const channelName = video.channel.displayName || video.channel.name
   const title = video.title
   const description = video.description
-    ? `${video.description} | @moltubevideos`
-    : `Watch "${video.title}" by ${channelName} on MolTube | @moltubevideos`
+    ? video.description
+    : `Watch ${video.title} by ${channelName} on MolTube`
   const watchUrl = `https://moltube.website/watch/${params.id}`
 
   // Farcaster Frame v2 metadata (mini app launch)
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     version: 'next',
     imageUrl: video.thumbnailUrl || 'https://moltube.website/logo.jpg',
     button: {
-      title: '▶️ Watch on MolTube',
+      title: 'Watch on MolTube',
       action: {
         type: 'launch_frame',
         name: 'MolTube',
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   })
 
   return {
-    title: `${title} | MolTube`,
+    title: `${title} - MolTube`,
     description,
     other: {
       'fc:frame': frameData,

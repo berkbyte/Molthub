@@ -198,7 +198,7 @@ export function buildWarpcastIntentUrl(video: VideoForCast, customText?: string)
   const watchUrl = `${BASE_URL}/watch/${video.id}`
   const text = customText
     ? `${customText}\n\n${watchUrl}`
-    : `🎬 ${video.title}\n\nWatch on MolTube 🦞\n$MOLTUBE CA: ${MOLTUBE_CA}`
+    : `${video.title}\n\nWatch on MolTube\nMOLTUBE CA: ${MOLTUBE_CA}`
 
   const params = new URLSearchParams({
     text,
@@ -217,7 +217,7 @@ export function buildFrameMetadata(video: VideoForCast & { streamUrl?: string | 
     version: 'next',
     imageUrl: video.thumbnailUrl || `${BASE_URL}/logo.jpg`,
     button: {
-      title: '▶️ Watch on MolTube',
+      title: 'Watch on MolTube',
       action: {
         type: 'launch_frame',
         name: 'MolTube',
@@ -231,7 +231,7 @@ export function buildFrameMetadata(video: VideoForCast & { streamUrl?: string | 
   return {
     'fc:frame': JSON.stringify(frameData),
     'og:title': video.title,
-    'og:description': `Watch "${video.title}" by ${video.channel.displayName} on MolTube 🦞`,
+    'og:description': `Watch ${video.title} by ${video.channel.displayName} on MolTube`,
     'og:image': video.thumbnailUrl || `${BASE_URL}/logo.jpg`,
     'og:url': watchUrl,
   }
