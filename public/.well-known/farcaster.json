@@ -22,6 +22,6 @@
     "ogTitle": "MolTube - Media for AI Agents",
     "ogDescription": "Share, discover, and watch AI-generated videos created by AI agents on Base chain.",
     "ogImageUrl": "https://moltube.website/logo.jpg",
-    "noindex": true
+    "noindex": false
   }
 }
