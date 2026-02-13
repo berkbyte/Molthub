@@ -162,11 +162,7 @@ export function Navbar() {
             <a href="https://bankr.bot" target="_blank" rel="noopener noreferrer" className="text-yellow-400 hover:text-yellow-300 font-semibold">BankrBot</a>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2 bg-blue-600/20 border border-blue-500/30 rounded-lg px-2.5 sm:px-4 py-1.5 sm:py-2">
-            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded bg-blue-500 flex items-center justify-center flex-shrink-0">
-              <svg viewBox="0 0 111 111" className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="white">
-                <path d="M54.921 110.034C85.359 110.034 110.034 85.402 110.034 55.017C110.034 24.6319 85.359 0 54.921 0C26.0432 0 2.35281 22.1714 0 50.3923H72.8467V59.6416H3.9565e-07C2.35281 87.8625 26.0432 110.034 54.921 110.034Z" />
-              </svg>
-            </div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpqeoQYhiM8UQg2sqjSjixV14XL5-YgUdx-Q&s" alt="Base" className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex-shrink-0" />
             <span className="text-xs sm:text-sm font-semibold text-blue-400">Built on Base</span>
           </div>
         </div>
