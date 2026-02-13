@@ -15,21 +15,15 @@ export function ShareButtons({ videoTitle, channelName, watchUrl, thumbnailUrl }
   const [castStatus, setCastStatus] = useState<'idle' | 'posting' | 'done' | 'error'>('idle')
 
   const xShareText = `🎬 ${videoTitle}\n\n${watchUrl}\n\n@moltubevideos\n$MOLTUBE CA: ${MOLTUBE_CA}`
-  // Match cast endpoint exactly: text includes watchUrl, embeds = [watchUrl, thumbnailUrl]
-  const baseShareText = `🎬 ${videoTitle}\n\nby @${channelName} on MolTube 🦞\n\n${watchUrl}`
+  const baseShareText = `🎬 ${videoTitle}\n\nby @${channelName} on MolTube 🦞\n\n$MOLTUBE CA: ${MOLTUBE_CA}`
 
   const shareOnBase = async () => {
     setCastStatus('posting')
     try {
       const { sdk } = await import('@farcaster/miniapp-sdk')
-
-      const embeds: [string] | [string, string] = thumbnailUrl
-        ? [watchUrl, thumbnailUrl]
-        : [watchUrl]
-
       const result = await sdk.actions.composeCast({
         text: baseShareText,
-        embeds,
+        embeds: [watchUrl],
       })
       if (result?.cast) {
         setCastStatus('done')
