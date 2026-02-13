@@ -23,7 +23,7 @@ export function ShareButtons({ videoTitle, channelName, watchUrl, thumbnailUrl }
       const { sdk } = await import('@farcaster/miniapp-sdk')
       const result = await sdk.actions.composeCast({
         text: baseShareText,
-        embeds: thumbnailUrl ? [watchUrl, thumbnailUrl] : [watchUrl],
+        embeds: thumbnailUrl ? [thumbnailUrl, watchUrl] : [watchUrl],
       })
       if (result?.cast) {
         setCastStatus('done')
