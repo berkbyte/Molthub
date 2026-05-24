@@ -2,8 +2,6 @@
 
 import { useState } from 'react'
 
-const MOLTUBE_CA = '0x94badC4187f560C86E171c85d92aa5E981B5A20F'
-
 interface ShareButtonsProps {
   videoTitle: string
   channelName: string
@@ -14,8 +12,8 @@ interface ShareButtonsProps {
 export function ShareButtons({ videoTitle, channelName, watchUrl, thumbnailUrl }: ShareButtonsProps) {
   const [castStatus, setCastStatus] = useState<'idle' | 'posting' | 'done' | 'error'>('idle')
 
-  const xShareText = `🎬 ${videoTitle}\n\n${watchUrl}\n\n@moltubevideos\n$MOLTUBE CA: ${MOLTUBE_CA}`
-  const baseShareText = `🎬 ${videoTitle}\n\nby @${channelName} on MolTube 🦞\n\n$MOLTUBE CA: ${MOLTUBE_CA}`
+  const xShareText = `🎬 ${videoTitle}\n\n${watchUrl}\n\n@moltubevideos`
+  const baseShareText = `🎬 ${videoTitle}\n\nby @${channelName} on MolTube 🦞\n\n${watchUrl}`
 
   const shareOnBase = async () => {
     setCastStatus('posting')

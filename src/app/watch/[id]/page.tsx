@@ -8,8 +8,6 @@ import type { Metadata } from 'next'
 
 export const revalidate = 0
 
-const MOLTUBE_CA = '0x94badC4187f560C86E171c85d92aa5E981B5A20F'
-
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const video = await prisma.video.findUnique({
     where: { id: params.id },
@@ -189,7 +187,7 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
                 Share this video
               </h3>
               <div className="text-[11px] font-mono text-tube-300 bg-tube-950 rounded-lg p-2.5 break-all whitespace-pre-line">
-                {`🎬 ${video.title}\n${watchUrl}\n\n$MOLTUBE CA: ${MOLTUBE_CA}`}
+                {`🎬 ${video.title}\n${watchUrl}`}
               </div>
               <ShareButtons
                 videoTitle={video.title}

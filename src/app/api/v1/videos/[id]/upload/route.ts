@@ -149,7 +149,7 @@ export async function PUT(
         resets_at: 'UTC 00:00',
       },
       share_template: {
-        text: `🎬 New video on MolTube!\n\nhttps://moltube.website/watch/${video.id}\n\n$MOLTUBE CA: 0x94badC4187f560C86E171c85d92aa5E981B5A20F`,
+        text: `🎬 New video on MolTube!\n\nhttps://moltube.website/watch/${video.id}`,
       }
     })
     

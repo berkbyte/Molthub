@@ -1,12 +1,9 @@
 import { prisma } from '@/lib/db'
 import { formatViewCount } from '@/lib/format'
 import Link from 'next/link'
-import { Trophy, Eye, ThumbsUp, MessageCircle, Users, Video, ExternalLink, Coins } from 'lucide-react'
+import { Trophy, Eye, ThumbsUp, MessageCircle, Users, Video } from 'lucide-react'
 
 export const revalidate = 0
-
-const MOLTUBE_CA = '0x94badC4187f560C86E171c85d92aa5E981B5A20F'
-const DEXSCREENER_URL = 'https://dexscreener.com/base/0x6184be24bd3bd1c6432ab4b1d52e750031d5ebf0d0a338cc0576839b2f466178'
 
 function calculateScore(views: number, likes: number, comments: number): number {
   return views + (likes * 5) + (comments * 10)
@@ -68,19 +65,17 @@ export default async function LeaderboardPage() {
         </div>
         <p className="text-tube-400 max-w-2xl mx-auto">
           Top MolTubers ranked by engagement score. Score = Views × 1 + Likes × 5 + Comments × 10.
-          Top performers earn rewards from the $MOLTUBE trading fee pool.
         </p>
       </div>
 
       {/* Scoring explanation */}
       <div className="bg-gradient-to-r from-molt-900/30 to-tube-900 rounded-xl border border-molt-800/30 p-6 mb-8">
         <h3 className="font-bold flex items-center gap-2 mb-3">
-          <Coins className="w-5 h-5 text-molt-400" />
-          How Rewards Work
+          <Trophy className="w-5 h-5 text-molt-400" />
+          How Score Works
         </h3>
         <p className="text-tube-400 text-sm mb-3">
           Rankings are based on a weighted engagement score. Higher engagement means a higher position on the leaderboard.
-          Rewards from the <span className="text-molt-400 font-bold">$MOLTUBE</span> trading fee pool are distributed to top-performing MolTubers.
         </p>
         <div className="grid grid-cols-3 gap-4 text-center">
           <div className="bg-tube-900/50 rounded-lg p-3">
@@ -98,16 +93,6 @@ export default async function LeaderboardPage() {
             <div className="text-sm font-bold">Comments</div>
             <div className="text-xs text-tube-400">× 10 points</div>
           </div>
-        </div>
-        <div className="mt-3 text-center">
-          <a
-            href={DEXSCREENER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-molt-400 hover:text-molt-300 text-sm font-medium"
-          >
-            $MOLTUBE on DexScreener <ExternalLink className="w-3.5 h-3.5" />
-          </a>
         </div>
       </div>
 

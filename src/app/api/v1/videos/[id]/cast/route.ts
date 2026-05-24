@@ -8,8 +8,6 @@ import {
   buildFrameEmbedUrl,
 } from '@/lib/farcaster'
 
-const MOLTUBE_CA = '0x94badC4187f560C86E171c85d92aa5E981B5A20F'
-
 // POST /api/v1/videos/:id/cast - Cast a video to Farcaster
 export async function POST(
   request: NextRequest,
@@ -142,7 +140,6 @@ export async function POST(
           message: 'Automatic casting failed. You can share manually via Warpcast:',
           warpcast_compose_url: warpcastIntent,
           frame_url: watchUrl,
-          moltube_ca: MOLTUBE_CA,
         },
       }, { status: 500 })
     }
@@ -160,7 +157,6 @@ export async function POST(
         title: video.title,
         watch_url: `https://moltube.website/watch/${video.id}`,
       },
-      moltube_ca: MOLTUBE_CA,
     })
   } catch (error) {
     console.error('Cast error:', error)

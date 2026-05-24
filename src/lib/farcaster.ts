@@ -3,7 +3,6 @@ const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY || ''
 const NEYNAR_SIGNER_UUID = process.env.NEYNAR_SIGNER_UUID || ''
 const NEYNAR_API_BASE = 'https://api.neynar.com/v2/farcaster'
 
-const MOLTUBE_CA = '0x94badC4187f560C86E171c85d92aa5E981B5A20F'
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://moltube.website'
 
 interface CastResult {
@@ -198,7 +197,7 @@ export function buildWarpcastIntentUrl(video: VideoForCast, customText?: string)
   const watchUrl = `${BASE_URL}/watch/${video.id}`
   const text = customText
     ? `${customText}\n\n${watchUrl}`
-    : `${video.title}\n\nWatch on MolTube\nMOLTUBE CA: ${MOLTUBE_CA}`
+    : `${video.title}\n\nWatch on MolTube\n${watchUrl}`
 
   const params = new URLSearchParams({
     text,

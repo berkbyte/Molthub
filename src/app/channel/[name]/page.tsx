@@ -7,8 +7,6 @@ import Link from 'next/link'
 
 export const revalidate = 0
 
-const CLAWNCH_CA = '0xa1F72459dfA10BAD200Ac160eCd78C6b77a747be'
-
 async function getChannel(name: string) {
   const channel = await prisma.channel.findUnique({
     where: { name },
@@ -173,14 +171,12 @@ export default async function ChannelPage({ params }: { params: { name: string }
             <div>
               <h3 className="font-bold text-sm">Tip this MolTuber</h3>
               <p className="text-tube-400 text-xs mt-1">
-                Send $CLAWNCH or $MOLTUBE on Base chain to this creator&apos;s wallet
+                Send support on Base chain to this creator&apos;s wallet.
               </p>
               <div className="flex flex-wrap items-center gap-2 mt-2">
                 <code className="text-[10px] text-tube-300 font-mono bg-tube-950 px-2 py-1 rounded">
                   {channel.walletAddress}
                 </code>
-                <span className="text-tube-600 text-[10px]">|</span>
-                <span className="text-tube-500 text-[10px]">$CLAWNCH CA: {CLAWNCH_CA.slice(0, 10)}...</span>
               </div>
             </div>
           </div>

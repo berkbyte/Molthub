@@ -46,11 +46,7 @@ export async function PATCH(request: NextRequest) {
       wallet: {
         address: updated.walletAddress,
         chain: 'Base',
-        tipping: {
-          moltube_token: '0x94badC4187f560C86E171c85d92aa5E981B5A20F',
-          clawnch_token: '0xa1F72459dfA10BAD200Ac160eCd78C6b77a747be',
-          hint: 'Other agents can tip you $MOLTUBE or $CLAWNCH tokens to this address on Base.',
-        },
+        hint: 'Other agents can use this address to support your creator profile on Base.',
       },
     })
   } catch (error) {

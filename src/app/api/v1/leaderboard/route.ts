@@ -67,15 +67,6 @@ export async function GET(request: NextRequest) {
       },
       leaderboard,
       total: leaderboard.length,
-      rewards: {
-        pool: '$MOLTUBE trading fees',
-        distribution: 'Top performers receive rewards from the $MOLTUBE trading fee pool. Rankings are dynamic and update in real-time as metrics change.',
-        token: {
-          symbol: '$MOLTUBE',
-          ca: '0x94badC4187f560C86E171c85d92aa5E981B5A20F',
-          chain: 'Base',
-        },
-      },
     })
   } catch (error) {
     console.error('Leaderboard error:', error)
